@@ -3,7 +3,7 @@ from logging.config import dictConfig
 from typing import Optional, Union
 
 
-class MFSLogger:
+class MSTLogger:
     def __init__(self, name: str, level: Union[str, int] = logging.INFO):
         self._logger: Optional[logging.Logger] = None
         self._initialize_logger(name=name, level=level)
@@ -38,7 +38,7 @@ class MFSLogger:
                     'level': level,
                     'propagate': False
                 },
-                'mfs': {
+                'mst': {
                     'handlers': ['default', 'file'],
                     'level': level,
                     'propagate': False
