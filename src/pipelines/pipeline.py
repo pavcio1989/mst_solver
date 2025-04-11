@@ -25,11 +25,11 @@ class Pipeline:
                     getattr(solvers, MSTSolver[solver_name].value)(self.config)
 
                 # Create graph
-                solver.add_edges()
+                solver.add_directed_edges()
 
-                # # Visualise network flow graph
-                # dg, pos = solver.get_directed_graph()
-                #
-                # visualize_points_and_flows(dg, pos, self._output_image_path)
+                # Visualise network flow graph
+                dg, pos = solver.get_directed_graph()
+
+                visualize_points_and_flows(dg, pos, self._output_image_path)
             else:
                 logger.info(f"Minimum spanning tree solver: {solver_name} | In scope: NO")

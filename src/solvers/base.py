@@ -17,19 +17,27 @@ class MinimumSpanningTreeBaseSolver:
 
     def __init__(self, config: Config):
         self.n = config.node_count
-        self.visited = self.n * [False]
         self.s = config.source_id
         self.t = config.sink_id
         self.config = config
+
+        self.m = self.n - 1 # number of edges in MST
+        self.visited = self.n * [False]
 
     @abstractmethod
     def solve(self):
         pass
 
-    def add_edges(self):
+    def add_directed_edges(self):
         edges_raw = DataLoader(self.config).load_edges_data()
         for edge_raw in edges_raw:
             self.add_edge(edge_raw[0], edge_raw[1], edge_raw[2])
+
+    def add_undirected_edges(self):
+        edges_raw = DataLoader(self.config).load_edges_data()
+        for edge_raw in edges_raw:
+            self.add_edge(edge_raw[0], edge_raw[1], edge_raw[2])
+            self.add_edge(edge_raw[1], edge_raw[0], edge_raw[2])
 
     def add_edge(self, start_node, end_node, cost):
         if cost <= 0:

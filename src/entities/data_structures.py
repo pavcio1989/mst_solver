@@ -1,20 +1,23 @@
+from src.entities.edges import Edge
+
+
 class IndexedMinPQ:
     def __init__(self, n):
         self.N: int = n
-        self.edge_start: list = [None for i in range(self.N)]
         self.key: list = [None for i in range(self.N)]
+        self.key_edges: list = [None for i in range(self.N)]
         self.pq: list = [None for i in range(self.N+1)]
         self.qp: list = [None for i in range(self.N)]
         self.total: int = 0
 
-    def insert(self, i: int, edge_start: int, key):
+    def insert(self, i: int, edge: Edge, key):
         assert type(i) is int
         if i >= self.N:
             raise IndexError('index is out of the range of IndexedMinPQ.')
         if self.key[i] is not None:
             raise IndexError('index is already in the IndexedMinPQ.')
         self.total += 1
-        self.edge_start[i] = edge_start
+        self.key_edges[i] = edge
         self.key[i] = key
         self.pq[self.total] = i
         self.qp[i] = self.total
@@ -35,15 +38,18 @@ class IndexedMinPQ:
 
     def delete_min(self):
         if not self.is_empty():
-            out = self.key[self.pq[1]]
+            out_key: int = self.key[self.pq[1]]
+            out_edge: Edge = self.key_edges[self.pq[1]]
+
             self.key[self.pq[1]] = None
+            self.key_edges[self.pq[1]] = None
             self.qp[self.pq[1]] = None
             self.pq[1] = self.pq[self.total]
             self.qp[self.pq[1]] = 1
             self.pq[self.total] = None
             self.total -= 1
             self.__sink(1)
-            return out
+            return out_key, out_edge
         raise IndexError('IndexedMinPQ is Empty')
 
     def __sink(self, i):
@@ -65,15 +71,20 @@ class IndexedMinPQ:
     def is_empty(self):
         return self.total == 0
 
-    def decrease_key(self, i, key):
+    def contains(self, i):
+        return self.key[i] is not None
+
+    def decrease_key(self, i: int, edge: Edge, key):
         if i < 0 or i > self.N:
             raise IndexError('index i is not in the range')
         if self.key[i] is None:
             raise IndexError('index i is not in the IndexedMinPQ')
         assert type(i) is int
-        assert key < self.key[i]
-        self.key[i] = key
-        self.__swim(self.qp[i])
+
+        if key < self.key[i]:
+            self.key[i] = key
+            self.key_edges[i] = edge
+            self.__swim(self.qp[i])
 
     def increase_key(self, i, key):
         if i < 0 or i > self.N:
