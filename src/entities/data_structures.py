@@ -38,7 +38,8 @@ class IndexedMinPQ:
 
     def delete_min(self):
         if not self.is_empty():
-            out_key: int = self.key[self.pq[1]]
+            out_index: int = self.pq[1]
+            out_key: float = self.key[self.pq[1]]
             out_edge: Edge = self.key_edges[self.pq[1]]
 
             self.key[self.pq[1]] = None
@@ -49,7 +50,7 @@ class IndexedMinPQ:
             self.pq[self.total] = None
             self.total -= 1
             self.__sink(1)
-            return out_key, out_edge
+            return out_index, out_key, out_edge
         raise IndexError('IndexedMinPQ is Empty')
 
     def __sink(self, i):

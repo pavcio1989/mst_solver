@@ -23,7 +23,7 @@ class PrimMstSolver(MinimumSpanningTreeBaseSolver):
 
         while not ipq.is_empty() and edge_count != self.m:
             # Extract the next best (node, edge) pair from IPQ
-            destination_node_index, edge = ipq.delete_min()
+            destination_node_index, _, edge = ipq.delete_min()
 
             edge_count += 1
             self.mst_edges[edge_count] = edge

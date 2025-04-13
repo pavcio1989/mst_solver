@@ -12,8 +12,8 @@ class MinimumSpanningTreeBaseSolver:
     mst_exists = False
     graph = defaultdict(list)
     # Outputs
-    mst_min_cost = None
-    mst_edges = []
+    mst_min_cost = 0
+    mst_edges = defaultdict(list)
 
     def __init__(self, config: Config):
         self.n = config.node_count
@@ -40,8 +40,6 @@ class MinimumSpanningTreeBaseSolver:
             self.add_edge(edge_raw[1], edge_raw[0], edge_raw[2])
 
     def add_edge(self, start_node, end_node, cost):
-        if cost <= 0:
-            raise Exception("Forward edge capacity <=0")
         edge1 = Edge(start_node, end_node, cost)
 
         self.graph[start_node].append(edge1)

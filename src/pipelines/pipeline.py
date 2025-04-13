@@ -25,11 +25,15 @@ class Pipeline:
                     getattr(solvers, MSTSolver[solver_name].value)(self.config)
 
                 # Create graph
-                solver.add_directed_edges()
+                solver.add_undirected_edges()
 
-                # Visualise network flow graph
-                dg, pos = solver.get_directed_graph()
+                if solver.if_mst_exists():
+                    logger.info(f"MST cost: {solver.get_mst_cost()}")
+                    logger.info(f"MST edges: {solver.get_mst()}")
+                    for edge in solver.get_mst().values():
+                        print(edge)
+                else:
+                    logger.info(f"Minimum spanning tree solver: {solver_name} | No MST exists.")
 
-                visualize_points_and_flows(dg, pos, self._output_image_path)
             else:
                 logger.info(f"Minimum spanning tree solver: {solver_name} | In scope: NO")
