@@ -15,7 +15,6 @@ class PrimMstSolver(MinimumSpanningTreeBaseSolver):
         self.solved = True
 
         edge_count = 0
-        mst_cost = 0
 
         ipq = IndexedMinPQ(self.n)
 
