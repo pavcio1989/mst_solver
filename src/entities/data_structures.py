@@ -96,3 +96,7 @@ class IndexedMinPQ:
         assert key > self.key[i]
         self.key[i] = key
         self.__sink(self.qp[i])
+
+
+class UnionFind:
+    pass
