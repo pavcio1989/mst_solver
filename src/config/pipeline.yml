@@ -1,4 +1,4 @@
 solvers:
   prim: True
-  kruskal: False
+  kruskal: True
 report: True

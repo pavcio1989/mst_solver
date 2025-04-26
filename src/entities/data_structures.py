@@ -1,4 +1,5 @@
 from src.entities.edges import Edge
+from collections import defaultdict
 
 
 class IndexedMinPQ:
@@ -96,3 +97,58 @@ class IndexedMinPQ:
         assert key > self.key[i]
         self.key[i] = key
         self.__sink(self.qp[i])
+
+
+class UnionFind:
+    size: int = 0
+    component_size = defaultdict()
+    id = defaultdict()
+    num_of_components = 0
+
+    def __init__(self, size):
+        if size < 0:
+            raise Exception("Negative size is not allowed.")
+        self.size = size
+        self.num_of_components = size
+
+        for i in range(size):
+            self.component_size[i] = 1
+            self.id[i] = i
+
+    def find(self, p: int):
+        # Find the root of component p
+        root = self.id[p]
+        while self.id[root] != root:
+            root = self.id[root]
+
+        # Compress the path leading back to the root.
+        while p != root:
+            _next = self.id[p]
+            self.id[p] = root
+            p = _next
+
+        return root
+
+    # Return whether the elements 'p' and 'q' are in the same components/set.
+    def connected(self, p: int, q: int):
+        return self.find(p) == self.find(q)
+
+    # Unify the components/sets containing elements 'p' and 'q'
+    def unify(self, p: int, q: int):
+
+        if self.connected(p, q):
+            return
+
+        root_1 = self.find(p)
+        root_2 = self.find(q)
+
+        if self.component_size[root_1] < self.component_size[root_2]:
+            self.component_size[root_2] += self.component_size[root_1]
+            self.id[root_1] = root_2
+            self.component_size[root_1] = 0
+        else:
+            self.component_size[root_1] += self.component_size[root_2]
+            self.id[root_2] = root_1
+            self.component_size[root_2] = 0
+
+        self.num_of_components -= 1
