@@ -2,9 +2,6 @@ from src.solvers.base import MinimumSpanningTreeBaseSolver
 from src.entities.data_structures import IndexedMinPQ
 
 
-MAX_COST = 1000000
-
-
 class PrimMstSolver(MinimumSpanningTreeBaseSolver):
     def __init__(self, config):
         super().__init__(config)

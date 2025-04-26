@@ -21,7 +21,7 @@ class MinimumSpanningTreeBaseSolver:
         self.t = config.sink_id
         self.config = config
 
-        self.m = self.n - 1 # number of edges in MST
+        self.m = self.n - 1  # number of edges in MST
         self.visited = self.n * [False]
 
     @abstractmethod
