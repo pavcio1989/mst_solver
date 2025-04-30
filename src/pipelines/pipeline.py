@@ -3,7 +3,7 @@ import logging
 from src import solvers
 from src.config.config import Config
 from src.pipelines.names import MSTSolver
-from src.utils.visuals import visualize_points_and_flows
+from src.utils.visuals import visualize_minimum_spanning_tree
 
 
 logger = logging.getLogger('mst')
@@ -32,6 +32,11 @@ class Pipeline:
                     logger.info(f"MST edges: {solver.get_mst()}")
                     for edge in solver.get_mst().values():
                         print(edge)
+
+                    # Visualise network flow graph
+                    dg, pos = solver.get_directed_graph()
+                    visualize_minimum_spanning_tree(dg, pos, self._output_image_path, solver.get_mst().values())
+
                 else:
                     logger.info(f"Minimum spanning tree solver: {solver_name} | No MST exists.")
 
