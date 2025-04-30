@@ -1,5 +1,7 @@
 from abc import abstractmethod
 from collections import defaultdict
+import numpy as np
+import networkx as nx
 
 from src.config.config import Config
 from src.data_manager.data_loader import DataLoader
@@ -11,6 +13,7 @@ class MinimumSpanningTreeBaseSolver:
     solved = False
     mst_exists = False
     graph = defaultdict(list)
+    graph_with_mst = None
     # Outputs
     mst_min_cost = 0
     mst_edges = defaultdict(list)
@@ -61,3 +64,24 @@ class MinimumSpanningTreeBaseSolver:
     def if_mst_exists(self):
         self.solve()
         return self.mst_exists
+
+    def get_directed_graph(self):
+        self.solve()
+
+        # Create empty NX directed graph
+        dg = nx.Graph()
+
+        # Fill graph with nodes and edges
+        for node in self.graph:
+            node_type = "middle"
+            dg.add_node(node, type=node_type)
+
+            edges = self.graph[node]
+            for edge in edges:
+                dg.add_edge(edge.start, edge.end, cost=edge.cost)
+
+        pos = nx.spring_layout(dg, seed=1236)
+
+        self.graph_with_mst = dg
+
+        return self.graph_with_mst, pos
