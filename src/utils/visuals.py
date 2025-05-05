@@ -96,7 +96,9 @@ def visualize_minimum_spanning_tree(graph, node_coordinates, output_path, mst_ed
         go.Scatter(
             x=[float(node_coordinates[node][0]) for node in graph.nodes],
             y=[float(node_coordinates[node][1]) for node in graph.nodes],
-            mode='markers',
+            text=[f"{node[0]}" for node in graph.nodes.data()],
+            mode='markers+text',
+            textposition="top center",
             marker=dict(
                 color=color_map["middle"],
                 size=NODE_SIZE,

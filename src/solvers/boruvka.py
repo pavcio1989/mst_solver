@@ -40,9 +40,6 @@ class BoruvkaMstSolver(MinimumSpanningTreeBaseSolver):
                         self.check_if_cheapest(union_find, edge, edge_start)
                         self.check_if_cheapest(union_find, edge, edge_end)
 
-            print(f"End of edge loop")
-            print(f"Cheapest edges of components: {union_find.component_cheapest_edge}")
-
             if union_find.if_component_cheapest_edge_empty():
                 completed = True
             else:
@@ -54,15 +51,14 @@ class BoruvkaMstSolver(MinimumSpanningTreeBaseSolver):
                             self.mst_edges[edge_count] = edge
                             self.mst_min_cost += edge.cost
 
-        print(f"MST edges: {self.mst_edges}")
-
         if edge_count == self.m:
             self.mst_exists = True
 
     def check_if_cheapest(self, union_find: UnionFind, edge: Edge, node: int):
+        component_id = union_find.find(node)
         if (
-                not union_find.component_cheapest_edge.get(node)
-                or union_find.component_cheapest_edge[node].cost > edge.cost
+                not union_find.component_cheapest_edge.get(component_id)
+                or union_find.component_cheapest_edge[component_id].cost > edge.cost
         ):
-            union_find.component_cheapest_edge[node] = edge
-        # TODO: Add tie-breaking rule if needed for edge cases
+            union_find.component_cheapest_edge[component_id] = edge
+        # TODO: Add tie-breaking rule (equal costs) if needed for edge cases
