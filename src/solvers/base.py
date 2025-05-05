@@ -12,7 +12,6 @@ class MinimumSpanningTreeBaseSolver:
     number_of_edges = None
     solved = False
     mst_exists = False
-    graph = defaultdict(list)
     graph_with_mst = None
     # Outputs
     mst_min_cost = 0
@@ -22,6 +21,7 @@ class MinimumSpanningTreeBaseSolver:
         self.n = config.node_count
         self.s = config.source_id
         self.t = config.sink_id
+        self.graph = defaultdict(list)
         self.config = config
 
         self.m = self.n - 1  # number of edges in MST
@@ -80,7 +80,7 @@ class MinimumSpanningTreeBaseSolver:
             for edge in edges:
                 dg.add_edge(edge.start, edge.end, cost=edge.cost)
 
-        pos = nx.spring_layout(dg, seed=1236)
+        pos = nx.spring_layout(dg, seed=self.config.graph_seed)
 
         self.graph_with_mst = dg
 

@@ -104,6 +104,7 @@ class UnionFind:
     component_size = defaultdict()
     id = defaultdict()
     num_of_components = 0
+    component_cheapest_edge = defaultdict()
 
     def __init__(self, size):
         if size < 0:
@@ -114,6 +115,19 @@ class UnionFind:
         for i in range(size):
             self.component_size[i] = 1
             self.id[i] = i
+
+    def initialize_component_cheapest_edge(self):
+        # Clean up the memory of cheapest edges
+        self.component_cheapest_edge = defaultdict()
+
+        for c in range(self.num_of_components):
+            self.component_cheapest_edge[c] = None
+
+    def if_component_cheapest_edge_empty(self):
+        for c in self.component_cheapest_edge.values():
+            if c:
+                return False
+        return True
 
     def find(self, p: int):
         # Find the root of component p

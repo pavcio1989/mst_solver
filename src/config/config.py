@@ -22,6 +22,8 @@ class Config:
         self.output_data_folder = self.input['data']['output_data_folder']
         self.output_image_folder = self.input['data']['output_image_folder']
 
+        self.graph_seed = self.input['data']['graph_seed']
+
         # Pipeline YAML
         with open('src/config/pipeline.yml', 'r') as pipeline_file:
             self.input = yaml.safe_load(pipeline_file)

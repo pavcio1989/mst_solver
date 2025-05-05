@@ -98,7 +98,7 @@ def visualize_minimum_spanning_tree(graph, node_coordinates, output_path, mst_ed
             y=[float(node_coordinates[node][1]) for node in graph.nodes],
             mode='markers',
             marker=dict(
-                color=[color_map[node[1]["type"]] for node in graph.nodes.data()],
+                color=color_map["middle"],
                 size=NODE_SIZE,
                 line=dict(
                     width=5,

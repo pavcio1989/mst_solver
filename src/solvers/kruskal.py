@@ -33,8 +33,6 @@ class KruskalMstSolver(MinimumSpanningTreeBaseSolver):
 
         union_find = UnionFind(size=self.n)
 
-        # print(f"Sorted edge list: {[(x.start, x.end, x.cost) for x in self.edge_list_sorted]}")
-
         for edge in self.edge_list_sorted:
             edge_start = edge.start
             edge_end = edge.end
