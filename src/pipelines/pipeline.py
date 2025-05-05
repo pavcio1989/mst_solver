@@ -1,4 +1,5 @@
 import logging
+from collections import defaultdict
 
 from src import solvers
 from src.config.config import Config
@@ -12,7 +13,7 @@ logger = logging.getLogger('mst')
 class Pipeline:
     def __init__(self, config: Config):
         self.solvers = config.solvers
-        self._output_image_path = f"{config.output_image_folder}/{config.input_file_path.split('/')[-1].split('.')[-2]}_flow_chart.png"
+        self._output_image_folder_path = f"{config.output_image_folder}/{config.input_file_path.split('/')[-1].split('.')[-2]}"
         self.config = config
 
     def run(self):
@@ -35,10 +36,13 @@ class Pipeline:
 
                     # Visualise network flow graph
                     dg, pos = solver.get_directed_graph()
-                    visualize_minimum_spanning_tree(dg, pos, self._output_image_path, solver.get_mst().values())
+                    _output_image_file_path = self._output_image_folder_path+"_flow_chart_"+solver_name+".png"
+                    visualize_minimum_spanning_tree(dg, pos, _output_image_file_path, solver.get_mst().values())
 
                 else:
                     logger.info(f"Minimum spanning tree solver: {solver_name} | No MST exists.")
+                    for edge in solver.mst_edges.values():
+                        print(edge)
 
             else:
                 logger.info(f"Minimum spanning tree solver: {solver_name} | In scope: NO")

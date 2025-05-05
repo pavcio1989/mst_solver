@@ -1,4 +1,5 @@
 solvers:
   prim: True
   kruskal: True
+  boruvka: True
 report: True
