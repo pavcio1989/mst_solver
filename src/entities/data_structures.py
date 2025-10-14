@@ -166,3 +166,13 @@ class UnionFind:
             self.component_size[root_2] = 0
 
         self.num_of_components -= 1
+
+    def disconnect(self, p: int, q: int):
+        root_1 = self.find(p)
+        root_2 = self.find(q)
+
+        self.id[p] = p
+        self.id[q] = q
+        self.num_of_components += 2
+        self.component_size[root_1] -= 1
+        self.component_size[root_2] -= 1

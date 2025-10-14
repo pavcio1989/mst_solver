@@ -10,5 +10,8 @@ class Edge:
     def compare_to(self, other):
         return self.cost - other.cost
 
+    def reverse(self):
+        return Edge(self.end, self.start, self.cost)
+
     def __str__(self):
         return f"Edge {self.start} -> {self.end} | cost = {self.cost}"

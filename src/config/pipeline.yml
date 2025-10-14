@@ -2,4 +2,5 @@ solvers:
   prim: True
   kruskal: True
   boruvka: True
+  reverse_delete: True
 report: True

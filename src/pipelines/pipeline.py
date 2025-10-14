@@ -19,6 +19,7 @@ class Pipeline:
     def run(self):
         for solver_name in self.solvers:
             if self.solvers[solver_name]:
+                logger.info(f"----****----")
                 logger.info(f"Minimum spanning tree solver: {solver_name} | In scope: YES")
 
                 # Initialize MaxFlow solver class
